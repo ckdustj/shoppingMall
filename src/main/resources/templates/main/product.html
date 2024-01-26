@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/5588f562de.js" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    @font-face {
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    ::-webkit-scrollbar{
+        display: none;
+    }
+
+    *{
+        font-family: 'Gowun Dodum', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    #content_wrapper{
+        margin: 50px auto;
+        width: 1000px;
+        display: flex;
+        background-color: azure;
+    }
+
+    .contents{
+        margin: 0 auto;
+        display: flex;
+    }
+
+    .prod_img{
+        width: 300px;
+        height: 400px;
+        /*background-image: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMDFfNDMg%2FMDAxNjk4ODI5NzcwNjY4.Tcx5YfAmQeTjZ6rr_PNUHEbUGX9OLANbNK5V6LjDOU4g.cNJd-ek3T6XgYphoGDvQGYLjixyrFoxzbFz6XGVT1_4g.JPEG.joohwan0705%2F1698829759_2194_32980.jpg&type=a340");*/
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 30px;
+    }
+
+    .prod_name{
+
+    }
+    .prod_info{
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1{
+        font-size: 20px;
+        margin-top: 8px;
+    }
+
+    .prod_price{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .prod_price > div+div {
+        font-size: 18px;
+        font-weight: bold;
+        color: #525252;
+    }
+
+    #sale{
+        font-size: 15px;
+        color: #f75d5d;
+        font-weight: bold;
+    }
+
+
+
+    .info1{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100px;
+        border: 1px solid black;
+        padding: 10px 10px;
+        width: 250px;
+    }
+
+    .info1 > div {
+        font-size: 13px;
+    }
+
+    .option{
+        display: none;
+    }
+
+    button{
+        width: 32%;
+        height: 30px;
+        background-color: white;
+        border: 0.5px solid black;
+        font-weight: bold;
+    }
+
+
+    li{
+        list-style: none;
+        width: 90%;
+        height: 100px;
+        border: 1px solid grey;
+        margin-top: 10px;
+    }
+
+    ul{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .moreInfo{
+        width: 1000px;
+        background-color: aliceblue;
+        height: auto;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+
+    #mainImg{
+        width: 1000px;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .btns{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    #buyBtn{
+        width: 100%;
+        margin-top: 10px;
+        background-color: pink;
+        font-weight: bold;
+    }
+
+    .result_price{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    p{
+        font-size: 13px;
+    }
+
+    #number_select{
+        margin-top: 10px;
+        margin-bottom: 3px;
+
+    }
+    span{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .prod_deliver > span {
+        font-size: 12px;
+        font-weight: unset;
+    }
+
+    i{
+        border: 1px solid black;
+        padding: 4px 4px;
+        border-radius: 50%;
+    }
+
+    .prod_deliver{
+        text-align: center;
+    }
+
+    select + select {
+        margin-top: 5px;
+    }
+
+    .moreImg > div{
+        width: 300px;
+        height: 500px;
+    }
+
+    .title{
+        font-size: 30px;
+        font-weight: bold;
+        padding-top: 30px;
+    }
+
+    #explain{
+        font-size: 20px;
+        margin-top: 20px;
+        padding-left: 80px;
+        padding-right: 80px;
+        padding-bottom: 30px;
+    }
+
+    #reviewBtn{
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        width: 1100px;
+    }
+
+    #reviewBtn > button {
+        border: none;
+    }
+
+    #reviewBtn > button+button{
+        border-left: 1px solid black;
+        border-left-style: dotted;
+    }
+
+    button:hover{
+        cursor: pointer;
+    }
+
+    .reviewList{
+        display: flex;
+        text-align: left;
+    }
+
+
+
+    .reviewImg{
+        background-image: url("../../static/image/냥3.jpg");
+        width: 200px;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .review{
+        font-size: 20px;
+        width: 1100px;
+        margin: 0 auto;
+
+    }
+
+    .reviewInfo{
+        padding: 5px 5px;
+        width: 300px;
+    }
+
+    .reviewWriter{
+        width: 300px;
+        padding: 5px 5px;
+    }
+
+    .reviewLike{
+        width: 100px;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    #mainImg{
+        display: block;
+        height: auto;
+    }
+
+</style>
+<body>
+  <form id="content_wrapper">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <input type="hidden" th:value="${product.no}" th:name="product.no">
+      <section class="contents">
+          <img class="prod_img" th:src="${product.productImgs[0].savedFileName}">
+          <section class="prod_info">
+              <div class="prod_name" ><h1 th:text="${product.title}"></h1></div>
+              <div class="prod_price"><div id="sale">47%</div><div th:text="${product.price}"></div></div>
+              <section class="info1">
+                  상세설명 :<div class="prod_detail"></div>
+                  배송정보 :<div class="prod-Shipping" th:text="${product.deliveryPrice}"></div>
+                  <div class="prod_deliver"><i class="fa-solid fa-truck"></i> <span>2시전에 주문하시면 당일발송됩니다.</span></div>
+                  <div class="option"></div>
+              </section>
+              <p id="number_select">옵션선택</p>
+              <select th:unless="${product.productOptions.isEmpty()}" name="product.productOptions[0].no">
+                  <th:block th:each="option : ${product.productOptions}">
+                    <option id="bookOption" th:value="${option.no}" th:text="${option.name}">분철</option>
+                  </th:block>
+<!--                  <option hidden="hidden">1번</option>-->
+<!--                  <option>2번</option>-->
+<!--                  <option>3번</option>-->
+              </select>
+              <select name="amount">
+                  <option hidden="hidden">수량</option>
+                  <option value="1">1개</option>
+                  <option value="2">2개</option>
+                  <option value="3">3개</option>
+              </select>
+              <div class="result_price"><p>총 상품금액</p> <span> 20000원</span></div>
+              <button id="buyBtn">구매하기</button>
+              <div class="btns">
+                  <button id="addBag">장바구니</button>
+                  <button>찜하기</button>
+                  <button>문의하기</button>
+              </div>
+          </section>
+      </section>
+  </form>
+  <section class="moreInfo">
+
+      <div class="title">[ 상세 설명 ]</div>
+      <div id="explain" th:text="${product.detailContents}"></div>
+          <img id="mainImg" th:src="${product.productImgs[1].savedFileName}">
+      </section>
+  </section>
+      </div>
+      <section class="review">
+          <div id="reviewBtn">
+              <button>전체보기</button>
+              <button>포토/동영상</button>
+              <button>최신순</button>
+              <button>인기순</button>
+              <button>평점순</button>
+          </div>
+
+          <ul>
+
+              <li class="reviewList">
+                  <div class="reviewImg"></div>
+                  <div class="reviewInfo">
+                      <div>상품명 : 인형</div>
+                      <div>옵션여부 : 하늘색</div>
+                      <div>상품리뷰 : 조아요 굳굳</div>
+                      </div>
+                      <div class="reviewWriter">
+                          <div>작성자 : 연서</div>
+                          <div>등록일 : 2023/12/18</div>
+                          <div>추천수 : 201</div>
+                      </div>
+                      <div class="reviewLike">
+                          <a href=""><i class="fa-solid fa-thumbs-up"></i></a>
+                      </div>
+              </li>
+              <li></li>
+              <li></li>
+              <li></li>
+          </ul>
+      </section>
+
+
+</body>
+</html>
+<script>
+    const formElem = document.forms.item(0);
+    const formData = new FormData(formElem);
+    const cartBtn = document.getElementById('addBag');
+
+    cartBtn.onclick = () => {
+        formElem.method="post";
+        formElem.action="/user/cart"
+        formElem.submit();
+    }
+</script>

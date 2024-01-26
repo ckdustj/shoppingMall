@@ -1,0 +1,78 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ProductMapper">
+    <resultMap id="product_result_map" type="com.shop.dto.product.ProductDTO" autoMapping="true">
+        <id property="no" column="product_no"/>
+
+        <collection property="productImgs" ofType="com.shop.dto.ImageFileDTO" javaType="list" autoMapping="true">
+            <id property="no" column="image_no"/>
+            <result property="savedFileName" column="product_img" />
+        </collection>
+
+        <collection property="productOptions" ofType="com.shop.dto.product.ProductOptionDTO" javaType="list">
+            <id property="no" column="option_no"/>
+            <result property="name" column="name" />
+            <result property="additionalPrice" column="additional_price" />
+        </collection>
+    </resultMap>
+    <select id="get_product_by_no" resultMap="product_result_map">
+        SELECT *,
+            P.`NO` as 'product_no',
+            PI.`NO` as 'image_no',
+            Po.`NO` as 'option_no'
+        FROM product p
+            LEFT OUTER JOIN `product_img` pi
+            ON `P`.`no` = `PI`.`product_no`
+            LEFT OUTER JOIN `product_option` PO
+            ON `P`.`no` = `PO`.`product_no`
+        WHERE `P`.`no` = #{no}
+        order by `PI`.`no`;
+    </select>
+
+    <select id="get_products" resultMap="product_result_map">
+        SELECT *,
+        P.`no` AS 'product_no',
+        PI.`no` AS 'image_no'
+        FROM product P
+        LEFT OUTER JOIN `product_img` PI
+        ON `P`.`no` = `PI`.`product_no`
+        <where>
+            <if test="searchWord != null">
+                `P`.`title` LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="order == 'price'">
+                ORDER BY `P`.`price` AND `PI`.`no`
+            </when>
+            <when test="order == 'recent'">
+                ORDER BY `P`.`write_date` AND `PI`.`no`
+            </when>
+            <when test="order == 'name'">
+                ORDER BY `P`.`title` AND `PI`.`no`
+            </when>
+            <otherwise>
+                ORDER BY `P`.`no` AND `PI`.`no`
+            </otherwise>
+        </choose>
+        LIMIT 100
+    </select>
+
+    <select id="get_categories" resultType="com.shop.dto.product.Category">
+        SELECT * FROM shopping_db.category;
+    </select>
+
+<!--    카테고리 중 대분류가 아닌 카테고리들만 가졍혼다 -->
+    <select id="get_category_by_no" resultType="com.shop.dto.product.Category">
+        WITH RECURSIVE `category_cte` AS
+        (
+        SELECT `no`, `parent_no`, `name`, `level` FROM `category` WHERE `no` = #{parentNo}
+        UNION ALL
+        SELECT CC.`no`, CC.`parent_no`, CC.`name`, CC.`level` FROM `category` CC
+        INNER JOIN `category_cte` CP
+        ON CC.`parent_no` = CP.`no`
+        )
+        SELECT * FROM `category_cte` WHERE `parent_no` != 0 ORDER BY `parent_no`;
+    </select>
+</mapper>

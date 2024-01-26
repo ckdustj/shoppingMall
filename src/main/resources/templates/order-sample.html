@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    IMP.init('imp34343376') // 예: 'imp00000000a'
+    request_order(123);
+    // 사전 검증 (사전 등록) 시도
+    function pre_order_request(){
+        const formData = new FormData();
+        const merchant_uid = crypto.randomUUID();
+        formData.set('merchant_uid', crypto.randomUUID())
+        formData.set('amount', 42525);
+        fetch('', {
+            method: "POST",
+            headers: {'X-Csrf-Token': csrfToken},
+            body: formData
+        }).then(resp => {
+            if (resp.ok && resp === 200){
+                request_order(merchant_uid);
+            }else {
+                alert("다시 시도");
+            }
+        });
+    }
+
+    function request_order(merchant_uid){
+        IMP.request_pay({
+            pg: "kakaopay.{TC0ONETIME}",
+            merchant_uid: merchant_uid, // 상점에서 생성한 고유 주문번호
+            name: "주문명:결제테스트",
+            amount: 1004,
+            buyer_email: "test@portone.io",
+            buyer_name: "구매자이름",
+            buyer_tel: "010-1234-5678",
+            buyer_addr: "서울특별시 강남구 삼성동",
+            buyer_postcode: "123-456",
+            // m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}"
+        }, order_request_result );
+    }
+
+
+
+    function order_request_result(response){
+        // +현재 주문한 모든 상품 목록 전달
+        const formData = new formData();
+        formData.set('no', [1, 2, 3]);
+        fetch('', {
+            method: "POST",
+            headers: {'X-Csrf-Token': csrfToken},
+            body: formData
+        }).then(resp => {});
+
+        // const { success, error_msg } = requestPayResponse;
+        // if (!success) {
+        //     alert(`결제에 실패하였습니다. 에러 내용: ${error_msg}`);
+        //     return;
+        // }
+        // // 이전 단계에서 구현한 결제정보 사후 검증 API 호출
+        // const res = await axios({
+        //     url: "/payments/complete",
+        //     method: "post",
+        //     headers: { "Content-Type": "application/json" },
+        //     data: { imp_uid: "...", merchant_uid: "..." },
+        // });
+        // switch (res.status) {
+        //     case: "vbankIssued":
+        //         // 가상계좌 발급 시 로직
+        //         break;
+        //     case: "success":
+        //         // 결제 성공 시 로직
+        //         break;
+        // }
+    }
+</script>

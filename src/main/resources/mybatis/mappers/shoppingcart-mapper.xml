@@ -1,0 +1,101 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ShoppingCartMapper">
+    <resultMap id="shopping_cart_result_map" type="ShoppingCartDTO" autoMapping="true">
+        <id property="no" column="sc_no"/>
+        <result property="amount" column="sc_amount" />
+
+        <association property="product" javaType="ProductDTO">
+            <id property="no" column="p_no"/>
+            <result property="title" column="title"/>
+            <result property="price" column="price"/>
+            <result property="deliveryPrice" column="deliveryPrice"/>
+
+            <association property="category" javaType="Category">
+                <id property="no" column="ct_no"/>
+                <result property="name" column="ct_name"/>
+            </association>
+
+            <collection property="productImgs" ofType="ImageFileDTO" javaType="list">
+                <id property="no" column="pi_no"/>
+                <result property="savedFileName" column="product_img"/>
+            </collection>
+
+            <collection property="productOptions" ofType="ProductOptionDTO" javaType="list">
+                <id property="name" column="po_name"/>
+                <result property="name" column="po_name"/>
+                <result property="additionalPrice" column="additioalPrice"/>
+                <result property="amount" column="po_amount"/>
+            </collection>
+        </association>
+    </resultMap>
+
+    <!-- 해당 유저의 장바구니 모든 정보 가져오기   -->
+    <select id="get_shopping_cart" resultMap="shopping_cart_result_map">
+        SELECT
+            SC.`no` AS 'sc_no',
+            P.`no` AS 'p_no',
+            PI.`no` AS 'pi_no',
+            PO.`no` AS 'po_no',
+            CT.`no` AS 'ct_no',
+            SC.`amount` AS 'sc_amount',
+            P.`title`,
+            P.`price`,
+            P.`delivery_price`,
+            PI.`product_img`,
+            CT.`name` AS 'ct_name',
+            PO.`name` AS 'po_name',
+            PO.`additional_price`
+        FROM shopping_cart SC
+            INNER JOIN `product` P
+            ON P.`no` = SC.`product_no`
+            INNER JOIN `product_img` PI
+            ON P.`no` = PI.`product_no`
+            INNER JOIN `category` CT
+            ON P.`category_no` = CT.`no`
+            LEFT OUTER JOIN `shopping_cart_option` SCO
+            ON SC.`no` = SCO.`shopping_cart_no`
+            LEFT OUTER JOIN `product_option` PO
+            ON SCO.`product_option_no` = PO.`no`
+        WHERE SC.`user_id` = #{user.id}
+        <if test="cartNumbers != null">
+            AND SC.no IN
+            <foreach collection="cartNumbers" item="cartNumber" open="(" close=")" separator=",">
+                #{cartNumber}
+            </foreach>
+        </if>
+    </select>
+
+    <!-- 장바구니에 상품 추가   -->
+    <insert id="insert_shopping_cart" parameterType="com.shop.dto.shopping.ShoppingCartDTO">
+        INSERT INTO `shopping_cart` (`user_id`, `product_no`) VALUES (#{user.id}, #{product.no})
+    </insert>
+
+    <!-- 장바구니에 상품 개수 변경   -->
+    <update id="change_cart_product_amount" parameterType="com.shop.dto.shopping.ShoppingCartDTO">
+        UPDATE `shopping_cart` SET `amount` = #{amount}
+        WHERE `user_id` = #{user.id} AND `no` = #{no}
+    </update>
+
+    <!--  장바구니에 상품 제거  -->
+    <delete id="delete_product">
+        DELETE FROM `shopping_cart`
+        <where>
+            <foreach collection="list" item="shoppingCart" separator="OR">
+                (`user_id` = #{ShoppingCart.user.id} AND `no` = #{shoppingCart.no})
+            </foreach>
+        </where>
+    </delete>
+
+    <!-- 장바구니의 한 상품의 옵션 추가   -->
+    <insert id="insert_shopping_cart_option" parameterType="com.shop.dto.shopping.ShoppingCartDTO">
+        <selectKey keyProperty="no" order="BEFORE" resultType="int">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT INTO `shopping_cart_option` VALUES
+        <foreach collection="product.productOptions" item="options" separator=",">
+            (NULL, #{no}, #{options.no})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}">
+    <title>Title</title>
+    <script src="https://kit.fontawesome.com/5588f562de.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+</head>
+<style>
+    @font-face {
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: 'Gowun Dodum', sans-serif;
+
+    }
+
+    ::-webkit-scrollbar {
+        display:none;
+        width: 0;
+    }
+
+
+    section{
+        width: 800px;
+        height: 800px;
+        border: 1px solid black;
+        margin: 30px auto;
+        top: 100px;
+        overflow: scroll;
+
+    }
+    .photo{
+        height: 200px;
+        width: 180px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .info > span{
+        margin-bottom: 5px;
+        padding-left: 10px;
+    }
+
+
+    ul{
+        list-style: none;
+        margin-left: 50px;
+    }
+
+    li{
+        width: 700px;
+        height: 200px;
+        border: 1px solid pink;
+        margin-bottom: 30px;
+        display: flex;
+        justify-self: center;
+    }
+
+    .num{
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .product_num{
+        width: 100%;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+
+    #priceSum{
+        width: 700px;
+        height: 40px;
+        border: 1px solid navy;
+        display: inline-flex;
+        justify-content: space-between;
+    }
+
+    #priceSum > div {
+        font-size: 1.6rem;
+        width: 700px;
+        margin-left: 10px;
+    }
+
+    #priceSum > div+div{
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .bold{
+        font-weight: bold;
+    }
+
+    #title{
+        margin: 20px 20px 5px 20px ;
+    }
+
+    .info{
+        width: 330px;
+        padding: 10px 10px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .delete{
+        width: 100%
+    }
+
+    .delete_btn{
+        width: 90px;
+        margin: 30px auto;
+    }
+
+    .delete_btn:hover{
+        color: #f75d5d;
+        font-weight: bolder;
+    }
+
+
+    .info > div{
+        margin-bottom: 5px;
+        padding-left: 10px;
+    }
+
+    /*#prodNum{*/
+    /*    height: 30px;*/
+    /*    font-weight: bold;*/
+    /*    text-align: center;*/
+    /*    display: flex;*/
+    /*}*/
+
+    .plusMinus{
+        text-align: center;
+    }
+
+    #prodNum > i{
+        font-size: 1rem;
+        margin-top: 13px;
+        border: 1px solid black;
+        padding: 3px 3px ;
+        border-radius: 5px;
+    }
+
+
+    button{
+        height: 30px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: none;
+        width: 30px;
+    }
+
+    .checkbox{
+        margin: 0  10px 0 10px;
+        width: 15px;
+        border-radius: 5px;
+    }
+
+    #select_all{
+        margin-left: 50px;
+        margin-bottom: 20px;
+    }
+
+    #check_div{
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    header{
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .header_wrap{
+        width: 800px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+    textarea{
+            resize: none;
+            border-radius: 10px;
+            width: 300px;
+            height: 40px;
+            margin-left: 30px;
+    }
+
+    .headerInner{
+        font-size: 30px;
+    }
+
+    a {
+        font-size: 1.6rem;
+    }
+
+    #infos{
+        margin: 0 auto;
+    }
+
+    #options{
+
+    }
+
+</style>
+<body>
+<header>
+    <div class="header_wrap" >
+        <div id="search">
+            <div class="headerInner">SHOPPING</div>
+            <div id="searchText">
+                <textarea></textarea>
+                <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+            </div>
+        </div>
+        <div id="userTab">
+            <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href=""><i class="fa-solid fa-heart"></i></a>
+            <a href=""><i class="fa-solid fa-user"></i></a>
+            <a href=""><i class="fa-solid fa-headset"></i></a>
+        </div>
+    </div>
+</header>
+<section>
+
+    <h1 id="title">MY BAG</h1>
+    <div id="check_div"><input type="checkbox" id="select_all"> 전체 선택하기</div>
+    <ul>
+        <li class="product-summary"
+                th:each="shoppingCart : ${shoppingCarts}"
+                th:with="productImg=${shoppingCart.product.productImgs[0]},
+                product=${shoppingCart.product},
+                options=${shoppingCart.product.productOptions}"
+        >
+            <input type="hidden" class="cart-no" th:name="no" th:value="${shoppingCart.no}">
+            <input type="checkbox" class="checkbox">
+            <a th:href="|/product/${product.no}|"><div class="photo" th:style="|background-image: url('${productImg.savedFileName}')|"></div></a>
+            <div class="info">
+                <div id="infos">
+                    <span>제품명 :</span> <span th:text="${product.title}"></span><br>
+                    <span>가격 : </span><span id="price" th:text="${product.price}"></span> <span>원</span>
+                    <!--                <div th:text=""></div>-->
+                </div>
+            </div>
+            <div id="options">
+                <div class="product_num">수량</div>
+                <div class="product-amount">
+                    <i class="fa-solid fa-minus" id="minusBtn"></i>
+                    <label><input type="number" th:value="${shoppingCart.amount}"></label>
+                    <i class="fa-solid fa-plus" id="plusBtn"></i>
+                </div>
+                <div class="delete"><button id="delete_btn">삭제하기</button></div>
+            </div>
+        </li>
+
+        <li id="priceSum">
+            <div>총 <span class="bold">N</span>개 항목</div>
+            <div>가격 총합 : <span class="bold"></span><span>원</span></div>
+        </li>
+
+        <button id="order-btn">주문하기</button>
+    </ul>
+
+</section>
+</body>
+</html>
+<script>
+    // CSRF 토큰 값을 가져온다
+    const csrfToken = document.querySelector('meta[name=_csrf]').getAttribute('content');
+    // 존재하는 모든 상품 (하나의 행) 을 가져온다
+    const productSummaries = document.getElementsByClassName('product-summary');
+    const delete_btn = document.getElementsByClassName('delete_btn');
+    const allSelectBtn = document.getElementById('select_all');
+    const orderBtn = document.getElementById('order-btn');
+
+    // 전체 체크 버튼 눌렀을 시
+    allSelectBtn.onclick = () => {
+        const checked = allSelectBtn.checked;
+        [...productSummaries].forEach(productSummary => {
+            const checkBox = productSummary.getElementsByClassName('checkbox')[0];
+            checkBox.checked = checked;
+        });
+    }
+
+    // 모든 상품들에게서 필요한 정보를 하나씩 가져온다
+    [...productSummaries].forEach(productSummary => {
+        const cartNo = +productSummary.querySelector('.cart-no').value;
+        const productAmountDiv = document.querySelector('.product-amount');
+        const [minus_btn, plus_btn] = productAmountDiv.getElementsByTagName('i');
+        const amountInputTag = productAmountDiv.querySelector('input');
+        const delete_btn = document.getElementById('delete_btn');
+
+        // 삭제 버튼
+        delete_btn.onclick = () => {
+            console.log("눌림");
+            delete_product([{"no": cartNo}]);
+        }
+
+        // 개수 늘리기
+        plus_btn.onclick = function(){
+            const amount = +amountInputTag.value;
+            amount + 1;
+            amountInputTag.value = amount;
+            change_product_amount(cartNo, +amountInputTag.value);
+        }
+
+        // 상품 개수 줄이기
+        minus_btn.onclick = function(){
+            const amount = +amountInputTag.value;
+            if(amount > 1){
+                amount -1;
+                amountInputTag.value = amount;
+            }else{
+                alert("최소 갯수는 1개 입니다.");
+            }
+            change_product_amount(cartNo, +amountInputTag.value);
+        }
+
+        // 해당 상품의 수량이 변경되었을 경우
+        amountInputTag.onchange = () => {
+            change_product_amount(cartNo, amountInputTag.value);
+        }
+    });
+
+    // 장바구니 수량 변경
+    function change_product_amount(shoppingCartNo, amount){
+        const formData = new FormData();
+        formData.set('no', shoppingCartNo);
+        formData.set('amount', amount);
+        fetch('/user/cart', {
+            method: "PATCH",
+            headers: {'X-CSRF-TOKEN': csrfToken},
+            body: formData
+        })
+            .then(response => {
+                if(response.ok){
+                    location.reload();
+                }else{
+                    alert('오류 발생!');
+                }
+            });
+    }
+
+    function delete_product(cartNoList){
+        fetch('/user/cart',{
+            method: "DELETE",
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cartNoList)
+        }).then(response => {
+            location.reload();
+        });
+    }
+
+    orderBtn.onclick = order;
+
+    function get_order_products(isAll){
+        const form = document.createElement('form');
+        [...productSummaries].forEach(productSummary => {
+            if (isAll || productSummary.querySelector('.checkbox').checked){
+                const newInput = document.createElement('input');
+                newInput.name = 'no';
+                newInput.value = productSummary.querySelector('.cart-no').value;
+                form.appendChild(newInput);
+            }
+        });
+        const csrfInput = document.createElement('input');
+        csrfInput.name = '_csrf';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        return form;
+    }
+
+    function order(){
+        const form = get_order_products(true);
+        document.body.appendChild(form);
+        form.action = '/order';
+        form.method = 'post';
+        form.submit();
+
+        // const formData = new FormData();
+        // const cartOrders = get_order_products(true);
+        // formData.set('no', cartOrders);
+        // fetch(`/order`, {
+        //     method: 'POST',
+        //     headers: {'X-CSRF-TOKEN': csrfToken},
+        //     body: formData
+        // }).then(resp => {
+        //     // 요청도 성공이고, 주문 정보도 성공이면 OK
+        //     if (resp.ok && resp.status === 201){
+        //         return resp.json()
+        //     }else if (resp.ok){
+        //         alert("비정상적인 접근입니다");
+        //     }
+        // }).then(value => {
+        //     if (value){
+        //         // location.href = "/order";
+        //     }else {
+        //         alert("주문 정보 에러!");
+        //     }
+        // })
+    }
+
+
+
+
+</script>

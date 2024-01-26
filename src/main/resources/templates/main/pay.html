@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://kit.fontawesome.com/5588f562de.js" crossorigin="anonymous"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/pay.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <header>
+            <div class="header_wrap" >
+                <div id="search">
+                    <div class="headerInner">SHOPPING</div>
+                    <div id="searchText">
+                        <textarea></textarea>
+                        <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                    </div>
+                </div>
+                <div id="userTab">
+                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href=""><i class="fa-solid fa-heart"></i></a>
+                    <a href=""><i class="fa-solid fa-user"></i></a>
+                    <a href=""><i class="fa-solid fa-headset"></i></a>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div id="mainTitle"> 주문 / 결제하기</div>
+            <section class="payMain">
+            <div id="infoBox">
+                <div class="subTitle">배송 정보 입력</div>
+                <div class="category">
+                    <div id="addr">
+                        <div class="flex"><div class="title">우편번호</div> <input id="payInfoNum" type="text" readonly disabled><span><button class="addrBtn">배송지 입력하기</button></span></div>
+                        <div class="flex"><div class="title">주소</div> <input id="payInfoAddr" type="text" readonly disabled></div>
+                        <div class="flex"><div class="title">상세주소</div> <input id="payInfoAddrDetail" type="text"></div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="title">배송요청사항</div>
+                    <div class="payInfo"><input type="text"></div>
+                </div>
+
+                <div class="category">
+                    <div class="title">이름</div>
+                    <div class="payInfo"><input type="text" id="nameInfo"></div>
+                </div>
+
+                <div class="category">
+                    <div class="title">전화번호</div>
+                    <div class="payInfo"><input type="text" id="numInfo" placeholder="000-0000-0000 형식으로 입력 해주세요"></div>
+                </div>
+            </div>
+
+
+                <div class="payment">
+                    <div  class="subTitle">결제수단</div>
+                    <div id="payWay">
+                            <input type="radio" name="select" class="selectCards" value="easy" checked/> 간편결제
+                            <input type="radio" name="select" class="selectCards" value="card" /> 카드결제
+                    </div>
+
+                    <div class="cardPay">
+                        <p>카드결제 수단을 선택해주세요</p>
+                        <select>
+                            <option hidden="hidden">카드선택</option>
+                            <option>신한카드</option>
+                            <option>국민카드</option>
+                            <option>현대카드</option>
+                        </select>
+                        <select>
+                            <option hidden="hidden">할부개월</option>
+                            <option>일시불</option>
+                            <option>1개월</option>
+                            <option>2개월</option>
+                            <option>3개월</option>
+                        </select>
+                    </div>
+
+                    <div class="easyPay">
+                        <p>간편결제 수단을 선택해주세요</p>
+                        <div ID="radios">
+                            <div class="cardpaySelect">
+                                <div id="kakao"></div>
+                                <input type="radio" name="card" value="kakao" checked/>
+                                <p>카카오페이</p>
+                            </div>
+                            <div class="cardpaySelect">
+                                <div id="naver"></div>
+                                <input type="radio" name="card" value="naver"/>
+                                <p>네이버페이</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payCheck">
+                    <h1><a href="cart.html">결제상세</a></h1>
+                    <h3>주문금액 : 200000원</h3>
+                    <h3>결제하기 버튼을 누를 시, 주문 내용을 모두 확인하였으며
+                    정보 제공에 동의한 것으로 입력됩니다.</h3>
+                </div>
+                <form action=""><button id="pay">결제하기</button></form>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footCorp">
+                <ul class="corpList">
+                    <div>I expound the actual that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces 회사정보입니다 ....</div>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>
+<script>
+    const [cardPayBtn, easyPayBtn] = document.getElementsByClassName('selectCards');
+    const easyPay = document.querySelector('.easyPay');
+    const cardPay = document.querySelector('.cardPay');
+    const addrBtn = document.querySelector('.addrBtn');
+    const nameInfo = document.getElementById('nameInfo');
+    const numInfo = document.getElementById('numInfo');
+    const pay = document.getElementById('pay');
+    const payInfoAddr = document.getElementById('payInfoAddr');
+    const payInfoAddrNum = document.getElementById('payInfoNum');
+    const payInfoAddrDetail = document.getElementById('payInfoAddrDetail');
+
+    cardPayBtn.onchange = () => {
+        cardPay.style.display = "none";
+        easyPay.style.display = "block"
+    }
+
+    easyPayBtn.onchange = () => {
+        cardPay.style.display = "block";
+        easyPay.style.display = "none";
+    }
+
+    pay.onclick = () => {
+        if (nameInfo.value == ""){
+            alert("이름을 입력해주세요");
+        }else if(numInfo.value == ""){
+            alert("전화번호를 입력해주세요");
+        }else{
+            alert("결제 완료되었습니다")
+        }
+    }
+
+    addrBtn.onclick = () => {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    payInfoAddr.value = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    payInfoAddr.value = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    payInfoAddr.value = extraAddr;
+        }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            payInfoAddrNum.value = data.zonecode;
+            // 커서를 상세주소 필드로 이동한다.
+            payInfoAddrDetail.focus();
+
+        }
+    }).open();
+
+
+}
+
+
+
+
+</script>

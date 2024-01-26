@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <script src="https://kit.fontawesome.com/5588f562de.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+</head>
+<style>
+    @font-face {
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: 'Gowun Dodum', sans-serif;
+
+    }
+
+    :root {
+        --swiper-navigation-size: 44px;
+    }
+
+    .contentWrapper {
+        width: 1000px;
+        min-width: 32rem;
+        margin: 0 auto;
+        justify-content: center;
+    }
+
+    ul > section{
+        width: 180px;
+        height: 350px;
+    }
+
+    main{
+        width: 100%;
+    }
+
+    /*#adContainer{*/
+    /*    width: 1000px;*/
+    /*    display: flex;*/
+    /*    overflow: hidden;*/
+    /*}*/
+
+    .shopMain{
+        margin-top: 100px;
+    }
+
+    header{
+        position: relative;
+        display: flex;
+        height: 100px;
+        width: 100%;
+        /*justify-content: ;*/
+        margin-top: 5%;
+    }
+
+
+    .pageHeader .headerInner {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 3rem;
+        padding: 0 1rem;
+        box-sizing: border-box;
+        background-color: #fff;
+    }
+    .headerInner {
+        display: flex;
+        /*align-items: center;*/
+        /*height: 100px;*/
+        box-sizing: border-box;
+        /*padding-top: 12px;*/
+        font-size: 2rem;
+        /*margin: auto 0;*/
+    }
+
+    .tab{
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+        margin-top: 10px;
+        /*margin-left: 50px;*/
+        /*margin-right: 50px;*/
+        font-size: 1rem;
+        font-weight: bold;
+        padding: 0 50px 0 50px;
+    }
+
+    .tourMain  .category {
+        box-sizing: border-box;
+    }
+
+    .tourMain .category ul {
+        display: grid;
+        grid-template-columns: repeat(5,minmax(20%,auto));
+        justify-content: space-between;
+        grid-gap: 1.6rem 0;
+        gap: 1.6rem 0;
+        padding: 1.2rem 2rem 2.4rem;
+        background-color: #fff;
+    }
+
+    .tourMain .specialPrice {
+        position: relative;
+        width: 70%;
+        height: 100%;
+        z-index: 1;
+        display: flex;
+        transition-property: transform;
+        box-sizing: content-box;
+        justify-content: center;
+    }
+
+    .tourMain * {
+        line-height: 1.5;
+    }
+
+    .tourMain section {
+        padding: 2.8rem 0;
+        border-bottom: 0.8rem solid #f0f4f4;
+        font-size: 0;
+    }
+
+    .tourMain .specialPrice .tabList {
+        position: relative;
+        padding: 0 2rem;
+        margin-bottom: 1.2rem;
+        font-size: 0;
+        overflow: hidden;
+    }
+
+    .category{
+        display: inline-flex;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .subCategory{
+        margin-top: 100px;
+    }
+
+    body, html {
+        padding: 0;
+        margin: 0;
+    }
+
+    body{
+        width: 100%;
+    }
+
+    body, div, p, section, footer{
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    ul{
+        padding: 0 20px;
+        list-style: none;
+        /*background-color: pink;*/
+        display: flex;
+        justify-content: space-between;
+        margin: 0 20px;
+        overflow: hidden;
+    }
+
+    .specialPrice > div{
+        font-size: 100rem;
+    }
+
+    .corpList{
+        height: 100px;
+        font-size: 1rem;
+    }
+
+    .footer {
+        padding: 30px 0 30px 0;
+        margin-top: 100px;
+        margin-bottom: 50px;
+        text-align: center;
+        color: rgba(17, 17, 17, 0.5);
+        font-size: 11px;
+        background-color: rgba(161, 161, 161, 0.3);
+        height: 100px;
+    }
+
+    .background{
+        background-image: url("../../static/image/냐옹이.jpg");
+        width: 180px;
+        height: 250px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #adContainer{
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .ad {
+        width: 400px;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .ad + .ad {
+        margin-left: 100px;
+    }
+    #search{
+        margin-left: 5%;
+        display: flex;
+    }
+
+    #specialLetter{
+        font-size: 5rem;
+        text-align: center;
+    }
+
+    textarea{
+        resize: none;
+        border-radius: 10px;
+        width: 300px;
+        height: 40px;
+        margin-left: 30px;
+    }
+
+    #userTab{
+        display: flex;
+        right: 10px;
+        position: absolute;
+        width: 15%;
+        justify-content: space-between;
+    }
+
+
+    #ad1{background-image: url("../../static/image/냥1.png")}
+    #ad2{background-image: url("../../static/image/냥2.jpg")}
+    #ad3{background-image: url("../../static/image/냥3.jpg")}
+    #ad4{background-image: url("../../static/image/냥4.jpg")}
+
+    .popularTrip{
+        margin-top: 200px;
+    }
+
+    .usefulInfo{
+        margin-top: 200px;
+        margin-bottom: 100px;
+    }
+
+    .pageBtn{
+        font-size: 1.2rem;
+    }
+
+    #pageBtnContainer{
+        margin: 0 auto;
+        display: flex;
+        text-align: center;
+        width: 500px;
+        justify-content: space-between;
+
+    }
+    .price-container{
+        font-size: 1rem;
+    }
+
+    i{
+        font-size: 1rem;
+        padding-bottom: 5px;
+
+    }
+
+    button{
+        margin-top: 5px;
+        width: 110px;
+        height: 30px;
+        font-size: 1rem;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    button:hover{
+        cursor: pointer;
+    }
+
+    .products{
+        padding: 5px 5px;
+    }
+
+    ul > section:hover{
+        cursor: pointer;
+    }
+
+    .theme {
+        display: inline-block;
+        position: relative;
+        /*margin: 10px;*/
+        width: 195px;
+        font-size: 1.3rem;
+    }
+
+    .theme:hover > .subTheme {
+        display: inline-block;
+        flex-direction: column;
+    }
+
+    .subTheme {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #f9f9f9;
+        width: 200px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    .subTheme > li{
+        list-style: none;
+    }
+
+    .subTheme > ul > li{
+        width: 150px;
+        margin-top: 5px;
+    }
+
+    .subTheme > ul > li:last-child{
+        margin-bottom: 5px;
+    }
+
+    .subTheme > li:hover{
+        cursor: pointer;
+    }
+
+    .subTheme > ul{
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding-right: 15px;
+        text-align: center;
+    }
+
+    </style>
+<body>
+    <div class="contentWrapper">
+        <header>
+            <div id="search">
+                <div class="headerInner">BOOKSTORE</div>
+                <div id="searchText">
+                    <textarea></textarea>
+                    <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                </div>
+            </div>
+            <div id="userTab">
+                <button>마이페이지</button>
+            </div>
+        </header>
+        <section class="tab">
+<!--            <div id="wrap">-->
+                <div class="theme">
+                    국내도서
+                    <div class="subTheme">
+                        <ul>
+                            <li>가정 살림</li>
+                            <li>건강 취미</li>
+                            <li>경제 경영</li>
+                            <li>국어/외국어 사전</li>
+                            <li>대학교재</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="theme">
+                    외국도서
+                    <div class="subTheme">
+                        <ul>
+                            <li>ELT사전</li>
+                            <li>문학소설</li>
+                            <li>경제 경영</li>
+                            <li>인문사회</li>
+                            <li>예술 대중문화</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="theme">
+                    중고샵
+                    <div class="subTheme">
+                        <ul>
+                            <li>중고도서</li>
+                            <li>중고 외국도서</li>
+                            <li>중고 CD/LP</li>
+                            <li>중고 DVD/BD</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="theme">
+                    eBook
+                    <div class="subTheme">
+                        <ul>
+                            <li>로맨스</li>
+                            <li>민화</li>
+                            <li>판타지/무협</li>
+                            <li>소설</li>
+                            <li>경제 경영</li>
+                        </ul>
+                    </div>
+                </div>
+<!--            </div>-->
+        </section>
+
+        <main class="shopMain">
+            <nav class="category">
+                <ul id="adContainer">
+                    <li class="ad" id="ad1">광고</li>
+                    <li class="ad" id="ad2">광고</li>
+<!--                    <li class="ad" id="ad3">2</li>-->
+<!--                    <li class="ad" id="ad4">2</li>-->
+                </ul>
+            </nav>
+            <section class="mainBanner"></section>
+            <section class="specialPrize">
+<!--                <div id="specialLetter">SHOP</div>-->
+                <div class="specialPriceList"></div>
+            </section>
+            <section class="subCategory">
+                <a href=""></a>
+                <a href=""></a>
+                <a href=""></a>
+                <a href=""></a>
+                <ul>
+                    <section>
+                        <div class="background" id="img1"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img2"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img3"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img4"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                </ul>
+            </section>
+            <section class="popularTrip">
+                <ul>
+                    <section>
+                        <div class="background" id="img5"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img6"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img7"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img8"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                </ul>
+            </section>
+            <section class="usefulInfo">
+                <ul>
+                    <section>
+                        <div class="background" id="img9"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img10"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img11"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="background" id="img12"></div>
+                        <div class="products">
+                            <div class="title-container">
+                                <span class="title">[ 30일 ] 시사회</span>
+                            </div>
+                            <div class="price-container">
+                                <div class>CGV 용산아이파크몰</div> <div>2023년 12월 18일 오후 8시 00분</div>
+                            </div>
+                        </div>
+                    </section>
+                </ul>
+            </section>
+            <div id="pageBtnContainer">
+                <a href="" class="pageBtn"><i class="fa-solid fa-caret-left"></i></a>
+                <a href="" class="pageBtn"><i class="fa-solid fa-1"></i></a>
+                <a href="" class="pageBtn"><i class="fa-solid fa-2"></i></a>
+                <a href="" class="pageBtn"><i class="fa-solid fa-3"></i></a>
+                <a href="" class="pageBtn"><i class="fa-solid fa-4"></i></a>
+                <a href="" class="pageBtn"><i class="fa-solid fa-5"></i></a>
+                <a href="" class="pageBtn"><i class="fa-solid fa-caret-right"></i></a>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="footCorp">
+                <ul class="corpList">
+                 <div>I expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure</div>
+                </ul>
+            </div>
+            <div class="footInfo">
+                <div class="infoBox"></div>
+                <div class="infoBox"></div>
+                <div class="infoBox"></div>
+            </div>
+            <div class="footNotice">
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+</head>
+    <style>
+        @font-face {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+         *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Gowun Dodum', sans-serif;
+
+         }
+
+         a{
+            text-decoration: none;
+         }
+
+         .wrap{
+            width: 450px;
+            background-color: rgb(255, 255, 255);
+            margin: 150px auto;
+            padding: 100px 30px 50px 50px;
+            border: 1px solid #dbdbdb;
+            border-radius: 30px;
+         }
+
+         h3{
+            font-size: 35px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 35px;
+         }
+
+         input{
+            width: 100%;
+            height: 45px;
+            display: block;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            border: none;
+            padding: 0 15px;
+            font-size: 20px;
+         }
+
+         .login_input{
+            background-color: #eee;
+         }
+
+         .login_input::placeholder{
+            font-size: 18px;
+            color: #a8a8a8;
+         }
+
+         #check{
+            height: 20px;
+            width: 20px;
+            float: left;
+            margin-right: 15px;
+         }
+         .login_btn{
+            background-color: #f75d5d;
+            color: white;
+         }
+
+         .login_btn:hover{
+             cursor: pointer;
+         }
+
+         .forget{
+            width: 100%;
+            text-align: center;
+         }
+
+         .forget a{
+            font-size: 18px;
+            color: #808080;
+         }
+
+         #kakao{
+             margin-top: 30px;
+             border-radius: 30px;
+             width: 175px;
+         }
+
+         #google{
+             margin-top: 30px;
+             margin-left: 10px;
+             width: 175px;
+         }
+
+         #naver{
+             width: 175px;
+             height: 43px;
+             border-radius: 30px;
+             margin-top: 10px;
+         }
+
+         p{
+            margin-top: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #808080;
+         }
+
+         p a{
+            color: hsl(209, 92%, 50%);
+         }
+
+         .login_path{
+             display: flex;
+             justify-content: space-between;
+         }
+
+         #join{
+             width: 175px;
+             height: 43px;
+             border-radius: 30px;
+             margin-top: 10px;
+             border: none;
+             font-weight: bold;
+             background-color: #d1efff;
+         }
+    </style>
+</head>
+    <body>
+        <form class="wrap" th:action="@{/user/login}" method="post">
+            <h3>LOGIN</h3>
+            <div class="input_wrap">
+                <input class="login_input" type="text" th:name="username" placeholder="ID / phone_number"/>
+                <input class="login_input" type="password" th:name="password" placeholder="password"/>
+                <input type="checkbox" id="check">
+                <label for="check">아이디 기억하기</label>
+
+                <input class="login_btn" type="button" value="LOGIN">
+                <div class="forget">
+                   <a th:href="@{/user/find}">아이디/패스워드를 까먹었어요..</a><br>
+                </div>
+            </div>
+
+            <div class="login_path">
+            <a th:href="@{/oauth2/authorization/kakao}" ><img id="kakao" th:src="@{/image/kakao_login_medium_narrow.png}" src="../../static/image/kakao_login_medium_narrow.png"/></a>
+            <a th:href="@{/oauth2/authorization/google}" ><img id="google" th:src="@{/image/google_login.png}" src="../../static/image/google_login.png"/></a>
+            </div>
+            <div class="login_path">
+                <a th:href="@{/oauth2/authorization/naver}" ><img id="naver" th:src="@{/image/btnG_완성형.png}" src="../../static/image/btnG_완성형.png"/></a>
+                <a href="join.html"><button id="join">회원가입하기</button></a>
+            </div>
+        </form>
+    </body>
+</html>
+<script>
+
+</script>

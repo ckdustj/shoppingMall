@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<style>
+    @font-face {
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Gowun Dodum', sans-serif;
+
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    .wrap{
+        width: 450px;
+        background-color: rgb(255, 255, 255);
+        margin: 150px auto;
+        padding: 80px 30px 50px 50px;
+        border: 1px solid #dbdbdb;
+        border-radius: 30px;
+    }
+
+    h3{
+        font-size: 35px;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    input{
+        width: 100%;
+        height: 45px;
+        display: block;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        border: none;
+        padding: 0 15px;
+        font-size: 20px;
+    }
+
+    .login_input{
+        background-color: #eee;
+    }
+
+    .login_input::placeholder{
+        font-size: 18px;
+        color: #a8a8a8;
+    }
+
+    .check{
+        height: 20px;
+        width: 20px;
+        float: left;
+        margin-right: 15px;
+    }
+    #join_btn{
+        background-color: #f75d5d;
+        color: white;
+    }
+
+    #join_btn:hover{
+        cursor: pointer;
+    }
+    #cert_btn:hover{
+        cursor: pointer;
+    }
+    p{
+        margin-top: 80px;
+        text-align: center;
+        font-size: 18px;
+        color: #808080;
+    }
+
+    p a{
+        color: hsl(209, 92%, 50%);
+    }
+
+
+</style>
+<body>
+
+
+
+<div class="wrap">
+    <h3>JOIN</h3>
+    <form id="signup-form" th:action="@{/user/join}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+        <div class="input_wrap">
+            <input class="login_input" th:name="email" type="text" placeholder="email" th:if="${session.snsUser == null}" />
+            <input class="login_input" th:name="email" type="text" placeholder="email" th:if="${session.snsUser != null}" th:value="${session.snsUser.email}"/>
+            <input class="login_input" th:name="id" type="text" placeholder="ID"/>
+            <input class="login_input" th:name="password" type="password" placeholder="password"/>
+            <input class="login_input" type="password" placeholder="password_check"/>
+            <input class="login_input" th:name="tel" type="tel" placeholder="phone_number"/>
+            <input class="login_input" th:name="imageFile" type="file" />
+            <input type="checkbox" class="check">개인정보 수집 동의</input>
+            <input id="join_btn" type="submit" value="JOIN">
+            <input id="cert_btn" type="button" value="본인인증하기">
+        </div>
+
+        <p>
+            이미 회원이신가요?
+            <a href="login.html">로그인으로 돌아가기  &rarr;</a>
+        </p>
+        <input type="hidden" id="user-ci" th:name="ci">
+    </form>
+</div>
+
+</body>
+</html>
+<script>
+    const form = document.forms.item(0);
+    const joinBtn = document.getElementById('join_btn');
+    const certBtn = document.getElementById('cert_btn');
+    const csrfToken = document.getElementsByName('_csrf')[0].value;
+    const userCIInput = document.getElementById('user-ci');
+    let userVerified = false;
+
+
+    certBtn.onclick = () => {
+        user_certification();
+    }
+
+    var IMP = window.IMP;      // 생략 가능
+    IMP.init("imp28336054"); // 예: imp00000000
+    // IMP.certification(param, callback) 호출
+
+
+    // 유저 본인인증
+    function user_certification(){
+        IMP.certification({
+            merchant_uid: "1"
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                console.log(rsp);
+                get_certification_unique_key(rsp.imp_uid)
+            } else {}
+        });
+    }
+
+    function get_certification_unique_key(imp_uid) {
+        fetch('/user/cert/token')
+            .then(resp => resp.text())
+            .then(value => {
+                console.log("token: ", value)
+                fetch(`/user/cert/${imp_uid}`, {
+                    method: "POST",
+                    headers: {
+                        'X-Csrf-Token': csrfToken,
+                        'Content-Type': "application/json"
+                    },
+                    body: value,
+                })
+                    .then(resp => {
+                        if (!resp.ok) {
+                            throw new Error("인증 실패");
+                        }
+                        return resp.text();
+                    })
+                    .then(value => {
+                        console.log('성공:', value);
+                        userCIInput.value = value;
+                        joinBtn.textContent = "가입하기(인증완료)";
+                        joinBtn.toggleAttribute('authenticated', true);
+                        userVerified = true;
+                    })
+                    .catch(error => {
+                        userVerified = false;
+                        console.log(error);
+                    });
+            });
+
+        joinBtn.onclick = () => {
+            // 인증이 완료되었다면 그냥 submit
+            if(userVerified){
+                form.submit();
+            }
+            // 인증이 안되었다면 재인증
+            else{
+                user_certification();
+            }
+        }
+    }
+</script>

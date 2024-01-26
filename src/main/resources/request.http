@@ -1,0 +1,25 @@
+### 카카오 로그인 (로그인 철회)
+POST https://kapi.kakao.com/v1/user/unlink
+Authorization: Bearer 0exag9CJa0Tfb457REf7j6jn-s6ooQ8kI7cKPXTbAAABjKPtKJ22W8wW6V7rJg
+
+### 구글 로그인 (로그인 철회)
+POST https://oauth2.googleapis.com/revoke?token=
+
+### 네이버 로그인 (로그인 철회)
+POST https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=xI_U2Rc4rNcF7aku67Pk&client_secret=85_4oN9wSo&access_token=ACCESS_TOKEN
+
+### 아임포트 토큰 받기
+POST http://api.iamport.kr/users/getToken
+Content-Type: application/json
+
+{
+  "imp_key": "8126181711377774",
+  "imp_secret": "9S3JPX3pxQhqlj7acuNTppgsv5K8gDfpiGozFMu5sTcyDjWI3UEUV0iq1HTaekVh1VnNqwISQgsjkO97"
+}
+
+####
+GET https://api.iamport.kr/certifications/imp_795370851477
+Authorization: e76fb2bf340ab695a0976135e0ae2b89a7b33c80
+
+###
+GET http://localhost:8080/user/cert/imp_795370851477

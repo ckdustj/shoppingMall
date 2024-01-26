@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .wrap{
+        display: flex;
+        width: 1200px;
+    }
+
+    .category {
+        display: inline-block;
+        position: relative;
+        margin: 10px;
+        width: 200px;
+    }
+
+    .category:hover .subcategory {
+        display: inline-block;
+        flex-direction: column;
+    }
+
+    .subcategory {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #f9f9f9;
+        padding: 10px;
+        font-size: 0.6rem;
+        width: 200px;
+    }
+
+    li{
+        list-style: none;
+    }
+</style>
+<body>
+<div id="wrap">
+    <div class="category">
+        국내도서
+        <div class="subcategory">
+            <ul>
+                <li>가정 살림</li>
+                <li>건강 취미</li>
+                <li>경제 경영</li>
+                <li>국어 외국어 사전</li>
+                <li>대학교재</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="category">
+        외국도서
+        <div class="subcategory">
+            <ul>
+                <li>ELT사전</li>
+                <li>문학소설</li>
+                <li>경제 경영</li>
+                <li>인문사회</li>
+                <li>예술 대중문화</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="category">
+        중고샵
+        <div class="subcategory">
+            <ul>
+                <li>중고도서</li>
+                <li>중고 외국도서</li>
+                <li>중고 CD/LP</li>
+                <li>중고 DVD/BD</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="category">
+        eBook
+        <div class="subcategory">
+            <ul>
+                <li>로맨스</li>
+                <li>민화</li>
+                <li>판타지/무협</li>
+                <li>소설</li>
+                <li>경제 경영</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

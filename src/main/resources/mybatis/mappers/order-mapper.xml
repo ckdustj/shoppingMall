@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.OrderMapper">
+    <insert id="create_order">
+        INSERT INTO `order` (`user_id`) VALUES (#{id})
+    </insert>
+
+    <insert id="create_order_cart">
+        <selectKey keyProperty="no" order="BEFORE" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `order_cart` (`order_no`, `cart_no` ) VALUES
+        <foreach collection="shoppingCarts" item="shoppingCart" separator=",">
+            (#{no}, #{shoppingCart.no})
+        </foreach>
+    </insert>
+
+</mapper>

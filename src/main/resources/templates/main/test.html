@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .tab_container{
+    display: flex;
+    border: 1px solid black;
+  }
+
+  li{
+    list-style: none;
+  }
+
+  .liContainer{
+
+  }
+
+  .upper_category{
+    display: flex;
+    background-color: #d1efff;
+  }
+  div{
+
+  }
+  a{
+    border: 1px solid black;
+    width: 100px;
+  }
+
+  .books:hover > ul{
+    display: block;
+    color: #ceeadd;
+  }
+
+  div > a {
+    background-color: #f8e8f5;
+    width: 150px;
+  }
+
+  .details{
+    display: flex;
+    flex-direction: column;
+  }
+  h2{
+    background-color: #eaceea;
+    padding: 5px 0 5px 5px;
+  }
+
+  /*ul{*/
+  /*  display: none;*/
+  /*}*/
+
+  .details{
+    display: none;
+  }
+
+  .upper_category:hover > .details{
+    display: block;
+    color: #d51818;
+  }
+
+
+  .books{
+    border: 1px solid #6c0000;
+    width: 300px;
+    height: 230px;
+  }
+</style>
+<body>
+
+<div class="tab_container">
+  <div class="books">
+    <h2>국내도서</h2>
+    <div class="categories">
+        <ul class="liContainer">
+          <li class="upper_category">
+            <a href="">가정살림</a>
+            <div>
+              <div>
+                <ul class="details">
+                  <li>임신 출산</li>
+                  <li>육아</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="upper_category">
+            <a href="">건강 취미</a>
+            <div>
+              <div>
+                <dl>
+                  <ul>
+                    <li>건강에세이 건강</li>
+                    <li>질병과 치료법</li>
+                  </ul>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="upper_category">
+            <a href="">국어 외국어 사전</a>
+            <div>
+              <div>
+                <dl>
+                  <ul>
+                    <li>영어</li>
+                    <li>국어</li>
+                  </ul>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="upper_category">
+            <a href="">대학교재</a>
+            <div>
+              <div>
+                <dl>
+                  <ul>
+                    <li>경상계열</li>
+                    <li>공학계열</li>
+                  </ul>
+                </dl>
+              </div>
+            </div>
+          </li>
+        </ul>
+    </div>
+  </div>
+  <div class="books">
+    <h2>외국도서</h2>
+    <div>
+      <div>
+        <ul>
+          <li class="upper_category">
+            <a href="">가정살림</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>임신 출산</li>
+                    <li>육아</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li  class="upper_category">
+            <a href="">건강 취미</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>건강에세이 건강</li>
+                    <li>질병과 치료법</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li  class="upper_category">
+            <a href="">국어 외국어 사전</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>영어</li>
+                    <li>국어</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li class="upper_category">
+            <a href="">대학교재</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>경상계열</li>
+                    <li>공학계열</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="books">
+    <h2>중고샵</h2>
+    <div>
+      <div>
+        <ul>
+          <li class="upper_category">
+            <a href="">가정살림</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>임신 출산</li>
+                    <li>육아</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li  class="upper_category">
+            <a href="">건강 취미</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>건강에세이 건강</li>
+                    <li>질병과 치료법</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li  class="upper_category">
+            <a href="">국어 외국어 사전</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>영어</li>
+                    <li>국어</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li class="upper_category">
+            <a href="">대학교재</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>경상계열</li>
+                    <li>공학계열</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="books">
+    <h2>eBook</h2>
+    <div>
+      <div>
+        <ul>
+          <li class="upper_category">
+            <a href="">가정살림</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>임신 출산</li>
+                    <li>육아</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li  class="upper_category">
+            <a href="">건강 취미</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>건강에세이 건강</li>
+                    <li>질병과 치료법</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li  class="upper_category">
+            <a href="">국어 외국어 사전</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>영어</li>
+                    <li>국어</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+          <li class="upper_category">
+            <a href="">대학교재</a>
+            <div>
+              <div>
+                  <ul>
+                    <li>경상계열</li>
+                    <li>공학계열</li>
+                  </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!--<ul>-->
+  <!--  <li>-->
+  <!--    <span>빠른분야찾기</span>-->
+  <!--    <div>-->
+  <!--      <section>-->
+  <!--        <ul>-->
+  <!--          <li>국내도서</li>-->
+  <!--          <li>외국도서</li>-->
+  <!--        </ul>-->
+  <!--      </section>-->
+
+  <!--      <section>-->
+  <!--        <ul>-->
+  <!--          <li>소설/시/</li>-->
+  <!--          <li>???</li>-->
+  <!--        </ul>-->
+  <!--      </section>-->
+  <!--    </div>-->
+  <!--  </li>-->
+
+  <!--</ul>-->
+
+</div>
+</body>
+</html>
